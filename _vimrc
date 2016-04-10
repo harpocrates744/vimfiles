@@ -73,6 +73,10 @@ ino <left> <Nop>
 ino <right> <Nop>
 
 " Windows  {{{2
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
 nmap <C-Up> <C-w>+
 nmap <C-Down> <C-w>-
 nmap <C-Left> <C-w><
@@ -108,7 +112,6 @@ let g:gundo_prefer_python3=1
 nnoremap <F5> :GundoToggle<CR>
 
 " Unite config  {{{2
-"noremap <F3> :Unite -start-insert file file_rec/async buffer file_mru<CR>
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 nnoremap <Leader>ff :Unite file<CR>
 nnoremap <Leader>fu :Unite file_mru<CR>
@@ -120,54 +123,53 @@ let g:unite_source_history_yank_enable = 1
 nnoremap <Leader>fy :Unite -quick-match history/yank<cr>
 nnoremap <Leader>fs :Unite source<CR>
 
+" Overwrite settings {{{3
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-  " Overwrite settings.
+    imap <buffer> jj      <Plug>(unite_insert_leave)
+    imap <buffer><expr> j unite#smart_map('j', '')
+    imap <buffer> <TAB>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
+    imap <buffer> '     <Plug>(unite_quick_match_default_action)
+    nmap <buffer> '     <Plug>(unite_quick_match_default_action)
+    imap <buffer><expr> x
+                \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
+    nmap <buffer> x     <Plug>(unite_quick_match_jump)
+    nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
+    nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
+    nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
+    nnoremap <silent><buffer><expr> l
+                \ unite#smart_map('l', unite#do_action('default'))
 
-  imap <buffer> jj      <Plug>(unite_insert_leave)
-  imap <buffer><expr> j unite#smart_map('j', '')
-  imap <buffer> <TAB>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-w>     <Plug>(unite_delete_backward_path)
-  imap <buffer> '     <Plug>(unite_quick_match_default_action)
-  nmap <buffer> '     <Plug>(unite_quick_match_default_action)
-  imap <buffer><expr> x
-          \ unite#smart_map('x', "\<Plug>(unite_quick_match_jump)")
-  nmap <buffer> x     <Plug>(unite_quick_match_jump)
-  nmap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-  imap <buffer> <C-z>     <Plug>(unite_toggle_transpose_window)
-  nmap <buffer> <C-j>     <Plug>(unite_toggle_auto_preview)
-  nmap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-  imap <buffer> <C-r>     <Plug>(unite_narrowing_input_history)
-  nnoremap <silent><buffer><expr> l
-          \ unite#smart_map('l', unite#do_action('default'))
+    let unite = unite#get_current_unite()
+    if unite.profile_name ==# 'search'
+        nnoremap <silent><buffer><expr> r     unite#do_action('replace')
+    else
+        nnoremap <silent><buffer><expr> r     unite#do_action('rename')
+    endif
 
-  let unite = unite#get_current_unite()
-  if unite.profile_name ==# 'search'
-    nnoremap <silent><buffer><expr> r     unite#do_action('replace')
-  else
-    nnoremap <silent><buffer><expr> r     unite#do_action('rename')
-  endif
+    nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
+    nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
+                \ empty(unite#mappings#get_current_sorters()) ?
+                \ ['sorter_reverse'] : [])
 
-  nnoremap <silent><buffer><expr> cd     unite#do_action('lcd')
-  nnoremap <buffer><expr> S      unite#mappings#set_current_sorters(
-          \ empty(unite#mappings#get_current_sorters()) ?
-          \ ['sorter_reverse'] : [])
-
-  " Runs "split" action by <C-s>.
-  imap <silent><buffer><expr> <C-s>     unite#do_action('split')
+    " Runs "split" action by <C-s>.
+    imap <silent><buffer><expr> <C-s>     unite#do_action('split')
 endfunction
 
 " Add blank line above/below cursor with [<Space> / ]<Space>  {{{2
 function! s:BlankUp(count) abort
-  put!=repeat(nr2char(10), a:count)
-  ']+1
-  silent! call repeat#set("\<Plug>unimpairedBlankUp", a:count)
+    put!=repeat(nr2char(10), a:count)
+    ']+1
+    silent! call repeat#set("\<Plug>unimpairedBlankUp", a:count)
 endfunction
 
 function! s:BlankDown(count) abort
-  put =repeat(nr2char(10), a:count)
-  '[-1
-  silent! call repeat#set("\<Plug>unimpairedBlankDown", a:count)
+    put =repeat(nr2char(10), a:count)
+    '[-1
+    silent! call repeat#set("\<Plug>unimpairedBlankDown", a:count)
 endfunction
 
 nnoremap <silent> <Plug>unimpairedBlankUp   :<C-U>call <SID>BlankUp(v:count1)<CR>
