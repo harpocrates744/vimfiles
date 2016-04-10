@@ -29,7 +29,7 @@ git submodule add git://github.com/tpope/vim-repeat.git ./bundle/repeat
 git submodule add https://github.com/justinmk/vim-sneak.git ./bundle/sneak
 git submodule add https://github.com/mhinz/vim-startify.git ./bundle/startify
 git submodule add git://github.com/tpope/vim-surround.git ./bundle/surround
-git submodule add https://github.com/bronson/vim-trailing-whitespace.git ./bundle/trailing-whitespace.
+git submodule add https://github.com/bronson/vim-trailing-whitespace.git ./bundle/trailing-whitespace
 git submodule add https://github.com/Shougo/vimproc.vim.git ./bundle/vimproc
 git submodule add https://github.com/Shougo/vimshell.vim.git ./bundle/vimshell
 
