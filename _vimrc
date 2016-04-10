@@ -32,7 +32,7 @@ set foldmethod=marker
 
 " *** GUI OPTIONS ***  {{{1
 if has('gui_running')
-    set lines=42 columns=110
+    set lines=42 columns=130
     if &encoding ==# 'latin1'
       set encoding=utf-8
     endif
@@ -50,13 +50,18 @@ if has('gui_running')
 endif
 
 " *** KEY MAPPINGS ***  {{{1
+" General  {{{2
 inoremap jj <Esc>
 vnoremap <BS> <Esc>
 nnoremap Q <nop>
 nnoremap <F1> :tab help<Space>
 nnoremap <BS> :q!<CR>
+"clear the highlighting of :set hlsearch.
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+"edit my vimrc
+noremap <leader>v :tabe $MYVIMRC<CR>
 
-" disable arrow keys
+" Disable arrow keys  {{{2
 no <down> <Nop>
 no <up> <Nop>
 no <left> <Nop>
@@ -67,10 +72,13 @@ ino <up> <Nop>
 ino <left> <Nop>
 ino <right> <Nop>
 
-" Edit my vimrc
-noremap <leader>v :tabe $MYVIMRC<CR>
+" Windows  {{{2
+nmap <C-Up> <C-w>+
+nmap <C-Down> <C-w>-
+nmap <C-Left> <C-w><
+nmap <C-Right> <C-w>>
 
-" Easymotion
+" Easymotion  {{{2
 nmap <Space>j <Plug>(easymotion-j)
 nmap <Space>k <Plug>(easymotion-k)
 nmap <Space>w <Plug>(easymotion-w)
@@ -78,8 +86,6 @@ nmap <Space>W <Plug>(easymotion-W)
 nmap <Space>b <Plug>(easymotion-b)
 nmap <Space>B <Plug>(easymotion-B)
 
-" Use <C-L> to clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
 "trailing white space
 nnoremap <leader>sws :match ErrorMsg '\s\+$'<CR>
@@ -151,7 +157,7 @@ function! s:unite_my_settings()
   imap <silent><buffer><expr> <C-s>     unite#do_action('split')
 endfunction
 
-" add blank line above/below cursor with [<Space> / ]<Space>  {{{2
+" Add blank line above/below cursor with [<Space> / ]<Space>  {{{2
 function! s:BlankUp(count) abort
   put!=repeat(nr2char(10), a:count)
   ']+1
@@ -170,7 +176,7 @@ nnoremap <silent> <Plug>unimpairedBlankDown :<C-U>call <SID>BlankDown(v:count1)<
 nmap [<Space> <Plug>unimpairedBlankUp
 nmap ]<Space> <Plug>unimpairedBlankDown
 
-"*** FILETYPE OVERRIDES ***  {{{1
+" *** FILETYPE OVERRIDES ***  {{{1
 augroup my_group
     au!
     au FileType python setl sw=4 sts=4 et
@@ -179,3 +185,12 @@ augroup my_group
     au FileType javascript setl sw=4 sts=4 et
     au FileType rst setl sw=3 sts=3 et
 augroup END
+
+" *** FOLDING ***  {{{1
+set foldtext=MyFoldText()
+
+function! MyFoldText()
+    let line = getline(v:foldstart)
+    let sub = substitute(line, '\v^\s+|\/\*|\*\/|\{\{\{\d=', '', 'g')
+    return v:folddashes . sub
+endfunction
