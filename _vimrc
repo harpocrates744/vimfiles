@@ -6,7 +6,7 @@ filetype plugin indent on
 " reload automatically vimrc when saved
 autocmd! bufwritepost _vimrc source %
 
-" *** GLOBAL OPTIONS ***  {{{1
+" GLOBAL OPTIONS  {{{1
 set nocompatible
 set noshowmode visualbell cursorline relativenumber
 set autoindent smarttab
@@ -30,7 +30,7 @@ set tabpagemax=50
 set foldmethod=marker
 "set list listchars=tab:>-,trail:· " Display tabs and trailing spaces visually
 
-" *** GUI OPTIONS ***  {{{1
+" GUI OPTIONS  {{{1
 if has('gui_running')
     set lines=42 columns=130
     if &encoding ==# 'latin1'
@@ -49,7 +49,7 @@ if has('gui_running')
     set guioptions-=T       "remove the toolbar
 endif
 
-" *** KEY MAPPINGS ***  {{{1
+" KEY MAPPINGS  {{{1
 " General  {{{2
 inoremap jj <Esc>
 vnoremap <BS> <Esc>
@@ -57,7 +57,7 @@ nnoremap Q <nop>
 nnoremap <F1> :tab help<Space>
 nnoremap <BS> :q!<CR>
 "clear the highlighting of :set hlsearch.
-nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+nnoremap <silent> coh :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 "edit my vimrc
 noremap <leader>v :tabe $MYVIMRC<CR>
 
@@ -178,7 +178,7 @@ nnoremap <silent> <Plug>unimpairedBlankDown :<C-U>call <SID>BlankDown(v:count1)<
 nmap [<Space> <Plug>unimpairedBlankUp
 nmap ]<Space> <Plug>unimpairedBlankDown
 
-" *** FILETYPE OVERRIDES ***  {{{1
+" FILETYPE OVERRIDES  {{{1
 augroup my_group
     au!
     au FileType python setl sw=4 sts=4 et
@@ -188,11 +188,17 @@ augroup my_group
     au FileType rst setl sw=3 sts=3 et
 augroup END
 
-" *** FOLDING ***  {{{1
-set foldtext=MyFoldText()
+" FOLDING  {{{1
+set foldtext=NeatFoldText()
 
-function! MyFoldText()
-    let line = getline(v:foldstart)
-    let sub = substitute(line, '\v^\s+|\/\*|\*\/|\{\{\{\d=', '', 'g')
-    return v:folddashes . sub
+function! NeatFoldText() "{{{2
+  let line = ' ' . substitute(getline(v:foldstart), '^\s*"\?\s*\|\s*"\?\s*{{' . '{\d*\s*', '', 'g') . ' '
+  let lines_count = v:foldend - v:foldstart + 1
+  let lines_count_text = '| ' . printf("%10s", lines_count . ' lines') . ' |'
+  let foldchar = matchstr(&fillchars, 'fold:\zs.')
+  let foldtextstart = strpart('+' . repeat(foldchar, v:foldlevel*2) . line, 0, (winwidth(0)*2)/3)
+  let foldtextend = lines_count_text . repeat(foldchar, 8)
+  let foldtextlength = strlen(substitute(foldtextstart . foldtextend, '.', 'x', 'g')) + &foldcolumn
+  return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
+" }}}2
