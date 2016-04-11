@@ -11,8 +11,8 @@ git submodule add https://github.com/scrooloose/nerdtree.git ./bundle/nerdtree
 git submodule add https://github.com/rust-lang/rust.vim.git ./bundle/rust
 git submodule add https://github.com/scrooloose/syntastic.git ./bundle/syntastic
 git submodule add https://github.com/SirVer/ultisnips.git ./bundle/ultisnips
-git submodule add https://github.com/Shougo/unite-session.git ./bundle/unite
-git submodule add https://github.com/Shougo/unite.vim.git ./bundle/unite-session
+git submodule add https://github.com/Shougo/unite-session.git ./bundle/unite-session
+git submodule add https://github.com/Shougo/unite.vim.git ./bundle/unite
 git submodule add https://github.com/vim-airline/vim-airline.git ./bundle/airline
 git submodule add https://github.com/vim-airline/vim-airline-themes.git ./bundle/airline-themes
 git submodule add https://github.com/altercation/vim-colors-solarized.git ./bundle/solarized
@@ -32,4 +32,3 @@ git submodule add git://github.com/tpope/vim-surround.git ./bundle/surround
 git submodule add https://github.com/bronson/vim-trailing-whitespace.git ./bundle/trailing-whitespace
 git submodule add https://github.com/Shougo/vimproc.vim.git ./bundle/vimproc
 git submodule add https://github.com/Shougo/vimshell.vim.git ./bundle/vimshell
-
