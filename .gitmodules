@@ -37,12 +37,6 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
-[submodule "bundle/unite"]
-	path = bundle/unite
-	url = https://github.com/Shougo/unite-session.git
-[submodule "bundle/unite-session"]
-	path = bundle/unite-session
-	url = https://github.com/Shougo/unite.vim.git
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/vim-airline/vim-airline.git
@@ -97,6 +91,3 @@
 [submodule "bundle/vimshell"]
 	path = bundle/vimshell
 	url = https://github.com/Shougo/vimshell.vim.git
-[submodule "bundle/bundle/trailing-whitespace"]
-	path = bundle/bundle/trailing-whitespace
-	url = https://github.com/bronson/vim-trailing-whitespace.git
