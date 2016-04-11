@@ -32,7 +32,7 @@ set foldmethod=marker
 
 " GUI OPTIONS  {{{1
 if has('gui_running')
-    set lines=42 columns=130
+    set lines=40 columns=130
     if &encoding ==# 'latin1'
       set encoding=utf-8
     endif
@@ -42,7 +42,7 @@ if has('gui_running')
     "color wombat256mod
     color gruvbox
 
-    set guifont=Powerline_Consolas:h11:cANSI
+    set guifont=Powerline_Consolas:h12:cANSI
     set guioptions-=m       "remove the menu bar
     set guioptions-=r       "remove the right scroll bar
     set guioptions-=L       "remove the left scroll bar
