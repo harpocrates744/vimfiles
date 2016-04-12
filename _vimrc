@@ -56,6 +56,8 @@ vnoremap <BS> <Esc>
 nnoremap Q <nop>
 nnoremap <F1> :tab help<Space>
 nnoremap <BS> :q!<CR>
+nnoremap <C-S> :w<CR>
+inoremap <C-S> <Esc>:w<CR>
 "clear the highlighting of :set hlsearch.
 nnoremap <silent> coh :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 "edit my vimrc
@@ -82,6 +84,23 @@ nmap <C-Down> <C-w>-
 nmap <C-Left> <C-w><
 nmap <C-Right> <C-w>>
 
+"trailing white space
+nnoremap <leader>sws :match ErrorMsg '\s\+$'<CR>
+nnoremap <Leader>rws :%s/\s\+$//e<CR>
+
+" Toggle GUI menu
+nmap [m :set go-=m<CR>
+nmap ]m :set go+=m<CR>
+
+" Various plugins  {{{2
+nmap <silent> <F2> :NERDTreeToggle<CR>
+nmap <silent> cot :NERDTreeToggle<CR>
+
+let g:gundo_prefer_python3=1
+nmap <F5> :GundoToggle<CR>
+nmap <F8> :TagbarToggle<CR>
+nmap <F10> :<C-U>tab<CR> :VimShell<CR>
+
 " Easymotion  {{{2
 nmap <Space>j <Plug>(easymotion-j)
 nmap <Space>k <Plug>(easymotion-k)
@@ -91,25 +110,6 @@ nmap <Space>b <Plug>(easymotion-b)
 nmap <Space>B <Plug>(easymotion-B)
 
 
-"trailing white space
-nnoremap <leader>sws :match ErrorMsg '\s\+$'<CR>
-nnoremap <Leader>rws :%s/\s\+$//e<CR>
-
-" NERDTree
-nmap <silent> <C-F2> :NERDTreeToggle<CR>
-nmap <silent> cot :NERDTreeToggle<CR>
-nmap <silent> <F2> :NERDTreeFind<CR>
-
-" Toggle GUI menu
-nmap [m :set go-=m<CR>
-nmap ]m :set go+=m<CR>
-
-" VimShell mappings
-nmap <F10> :<C-U>tab<CR> :VimShell<CR>
-
-" GUndo
-let g:gundo_prefer_python3=1
-nnoremap <F5> :GundoToggle<CR>
 
 " Unite config  {{{2
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
