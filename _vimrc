@@ -62,6 +62,11 @@ inoremap <C-S> <Esc>:w<CR>
 nnoremap <silent> coh :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 "edit my vimrc
 noremap <leader>v :tabe $MYVIMRC<CR>
+" in :ex mode, remap the <C-P> to <up> because <up> filters your search history
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+" in :ex mode %% will expand to the directory path of the current buffer
+cnoremap <expr>%% getcmdtype() == ':' ? expand('%:h').'\' : '%%'
 
 " Disable arrow keys  {{{2
 no <down> <Nop>
@@ -94,11 +99,15 @@ nmap ]m :set go+=m<CR>
 
 " Various plugins  {{{2
 nmap <silent> <F2> :NERDTreeToggle<CR>
-nmap <silent> cot :NERDTreeToggle<CR>
+nmap <silent> cod :NERDTreeToggle<CR>
 
 let g:gundo_prefer_python3=1
 nmap <F5> :GundoToggle<CR>
+nmap <silent> cou :GundoToggle<CR>
+
 nmap <F8> :TagbarToggle<CR>
+nmap <silent> cot :TagbarToggle<CR>
+
 nmap <F10> :<C-U>tab<CR> :VimShell<CR>
 
 " Easymotion  {{{2
@@ -189,6 +198,12 @@ augroup my_group
 augroup END
 
 " FOLDING  {{{1
+" python folding
+let g:SimpylFold_fold_import = 0
+autocmd! BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd! BufWinLeave *.py setlocal foldexpr< foldmethod<
+
+" improve default display of folds
 set foldtext=NeatFoldText()
 
 function! NeatFoldText() "{{{2
