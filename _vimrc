@@ -28,6 +28,7 @@ set formatoptions+=j " Delete comment character when joining commented lines
 set history=1000
 set tabpagemax=50
 set foldmethod=marker
+set diffopt=filler,vertical
 "set list listchars=tab:>-,trail:· " Display tabs and trailing spaces visually
 
 " GUI OPTIONS  {{{1
@@ -56,12 +57,15 @@ vnoremap <BS> <Esc>
 nnoremap Q <nop>
 nnoremap <F1> :tab help<Space>
 nnoremap <BS> :q!<CR>
+" save current buffer quickly with CTRL-S
 nnoremap <C-S> :w<CR>
 inoremap <C-S> <Esc>:w<CR>
 "clear the highlighting of :set hlsearch.
 nnoremap <silent> coh :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 "edit my vimrc
 noremap <leader>v :tabe $MYVIMRC<CR>
+" quickly fold/unfold
+noremap <Space> za
 " in :ex mode, remap the <C-P> to <up> because <up> filters your search history
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
@@ -111,12 +115,12 @@ nmap <silent> cot :TagbarToggle<CR>
 nmap <F10> :<C-U>tab<CR> :VimShell<CR>
 
 " Easymotion  {{{2
-nmap <Space>j <Plug>(easymotion-j)
-nmap <Space>k <Plug>(easymotion-k)
-nmap <Space>w <Plug>(easymotion-w)
-nmap <Space>W <Plug>(easymotion-W)
-nmap <Space>b <Plug>(easymotion-b)
-nmap <Space>B <Plug>(easymotion-B)
+nmap <Leader>j <Plug>(easymotion-j)
+nmap <Leader>k <Plug>(easymotion-k)
+nmap <Leader>w <Plug>(easymotion-w)
+nmap <Leader>W <Plug>(easymotion-W)
+nmap <Leader>b <Plug>(easymotion-b)
+nmap <Leader>B <Plug>(easymotion-B)
 
 
 
@@ -186,6 +190,9 @@ nnoremap <silent> <Plug>unimpairedBlankDown :<C-U>call <SID>BlankDown(v:count1)<
 
 nmap [<Space> <Plug>unimpairedBlankUp
 nmap ]<Space> <Plug>unimpairedBlankDown
+
+" CUSTOM COMMANDS {{{1
+command! -nargs=* Wrap set wrap linebreak nolist showbreak=
 
 " FILETYPE OVERRIDES  {{{1
 augroup my_group
