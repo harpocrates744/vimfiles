@@ -202,6 +202,9 @@ augroup my_group
     au FileType vim setl sw=4 sts=4 et
     au FileType javascript setl sw=4 sts=4 et
     au FileType rst setl sw=3 sts=3 et
+
+    let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+    au BufNewFile,BufReadPost *.md set filetype=markdown
 augroup END
 
 " FOLDING  {{{1
