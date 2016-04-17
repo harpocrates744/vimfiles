@@ -106,3 +106,9 @@
 [submodule "bundle/sympylfold"]
 	path = bundle/simpylfold
 	url = https://github.com/tmhedberg/SimpylFold.git
+[submodule "bundle/abolish"]
+	path = bundle/abolish
+	url = https://github.com/tpope/vim-abolish.git
+[submodule "bundle/diff-enhanced"]
+	path = bundle/diff-enhanced
+	url = https://github.com/chrisbra/vim-diff-enhanced.git
